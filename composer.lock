@@ -1,0 +1,54 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "0afab404432e5e8eb182ec0b7b779e25",
+    "packages": [
+        {
+            "name": "fsa/neuron-framework",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "/home/fsa/Projects/php-neuron-framework",
+                "reference": "b838defc30812c7b35aaa97b2e94c9ac13936cc1"
+            },
+            "require": {
+                "ext-redis": "*",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FSA\\Neuron\\": "classes/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Sergei Fedotov",
+                    "email": "fsa@tavda.info"
+                }
+            ],
+            "description": "Neuron PHP framework",
+            "transport-options": {
+                "symlink": true,
+                "relative": false
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "fsa/neuron-framework": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

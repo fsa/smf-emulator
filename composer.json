@@ -1,0 +1,21 @@
+{
+    "name": "fsa/smf-emulator",
+    "description": "SMF Forum Emulator",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "": "classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergei Fedotov",
+            "email": "fsa@tavda.info",
+            "homepage": "https://tavda.net/"
+        }
+    ],
+    "require": {
+        "fsa/neuron-framework": "dev-main"
+    }
+}
