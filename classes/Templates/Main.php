@@ -26,7 +26,7 @@ class Main
 <div class="tborder">
     <div class="catbg">
     <img class="floatright" id="smflogo" src="/img/smflogo.gif" alt="Simple Machines Forum" />
-    <h1 id="forum_name">Твой клуб</h1>
+    <h1 id="forum_name"><?=$this->context['title']?></h1>
     </div>
     <ul id="greeting_section" class="reset titlebg2">
         <li id="time" class="smalltext floatright">
@@ -80,7 +80,7 @@ class Main
 
     public function showNavigator(array $link_tree)
     {
-        $tree = [];
+        $tree = ["<a href=\"index.php\"><span>{$this->context['title']}</span></a>"];
         foreach ($link_tree as $link) {
             if (isset($link->topic_id)) {
                 $tree[] = "Тема: <a href=\"index.php?topic={$link->topic_id}.0.html\"><span>{$link->name}</span></a>";

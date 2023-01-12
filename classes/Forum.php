@@ -32,7 +32,8 @@ class Forum
         return $stmt->fetchObject();
     }
 
-    public function getBoardLinksTree(int $id) {
+    public function getBoardLinksTree(int $id)
+    {
         $boards = $this->getBoardsTree($id);
         if (is_null($boards)) {
             return null;
@@ -42,7 +43,8 @@ class Forum
         return $boards;
     }
 
-    public function getTopicLinksTree(int $id) {
+    public function getTopicLinksTree(int $id)
+    {
         $topic = $this->getTopic($id);
         if (is_null($topic)) {
             return null;
@@ -52,7 +54,6 @@ class Forum
             'topic_id' => $topic->id,
             'name' => $topic->title
         ]);
-        array_unshift($result, (object)['name'=>'Твой клуб']);
         return $result;
     }
 }

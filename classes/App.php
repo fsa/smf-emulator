@@ -23,7 +23,7 @@ class App extends FSA\Neuron\App
     protected static function getContext(): array
     {
         return [
-            'title' => 'SMF',
+            'title' => 'Твой клуб',
             'session' => self::session()
         ];
     }
