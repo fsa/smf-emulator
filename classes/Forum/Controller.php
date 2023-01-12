@@ -8,6 +8,7 @@ class Controller
 {
     public static function route()
     {
+        $response = App::initHtml();
         if(count($_GET)==0) {
             self::index();
             exit;
@@ -27,25 +28,22 @@ class Controller
             self::topic($topic);
             exit;            
         }
-        App::response()->returnError(404);
+        $response->returnError(404);
     }
 
     public static function index()
     {
-        $response = App::initHtml();
-        $response->showHeader('Тест');
-
-        $forum = new Structure(App::sql());
-        $tree = $forum->getTopicLinksTree(7);
-        $response->showNavigator($tree);
-        var_dump($tree);
-        $response->showNavigator($tree);
+        $response = App::response();
+        $response->showHeader();
+        $response->showNavigator([]);
+        //TODO: главная страница
+        $response->showNavigator([]);
         $response->showFooter();
     }
 
     public static function action($action)
     {
-        die("Action: $action");
+        App::response()->returnError(500);
     }
     public static function board($board)
     {
@@ -53,6 +51,9 @@ class Controller
     }
     public static function topic($topic)
     {
+        //$forum = new Structure(App::sql());
+        //$tree = $forum->getTopicLinksTree(7);
+        //$response->showNavigator($tree);
         die("Topic: $topic");
     }
 }
