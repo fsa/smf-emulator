@@ -58,4 +58,10 @@ class Structure
         ]);
         return $result;
     }
+
+    public function getAllBoards()
+    {
+        $stmt = $this->pdo->query("SELECT json_agg(a.cat) FROM (SELECT json_build_object('id', c.id, 'name', name, 'boards', b.boards) cat FROM (SELECT category_id, json_agg(json_build_object('id', id, 'name', name, 'description', description)) AS boards FROM boards WHERE parent_id IS NULL GROUP BY category_id) b LEFT JOIN categories c ON b.category_id=c.id ORDER BY c.category_order) a");
+        return json_decode($stmt->fetchColumn());
+    }
 }

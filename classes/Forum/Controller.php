@@ -3,6 +3,7 @@
 namespace Forum;
 
 use App;
+use Forum\View\Category;
 
 class Controller
 {
@@ -36,7 +37,9 @@ class Controller
         $response = App::response();
         $response->showHeader();
         $response->showNavigator([]);
-        //TODO: главная страница
+        $forum = new Structure(App::sql());
+        $boards = $forum->getAllBoards();
+        Category::show($boards);
         $response->showNavigator([]);
         $response->showFooter();
     }
