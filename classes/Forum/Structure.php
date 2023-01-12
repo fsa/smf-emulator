@@ -1,6 +1,8 @@
 <?php
 
-class Forum
+namespace Forum;
+
+class Structure
 {
 
     public function __construct(private $pdo)
