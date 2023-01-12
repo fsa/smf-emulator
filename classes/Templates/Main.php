@@ -36,8 +36,8 @@ class Main
         <li id="name">Добро пожаловать, <em>Гость</em></li>
     </ul>
     <div id="news_section" class="titlebg2 clearfix">
-        <form class="floatright" id="search_form" action="http://www.club2u.ru/index.php?action=search2" method="post" accept-charset="UTF-8">
-            <a href="http://www.club2u.ru/index.php?action=search;advanced" title="Расширенный поиск"><img id="advsearch" src="/img/filter.gif" align="middle" alt="Расширенный поиск" /></a>
+        <form class="floatright" id="search_form" action="/index.php?action=search2" method="post" accept-charset="UTF-8">
+            <a href="/index.php?action=search;advanced" title="Расширенный поиск"><img id="advsearch" src="/img/filter.gif" align="middle" alt="Расширенный поиск" /></a>
             <input type="text" name="search" value="" style="width: 190px;" class="input_text" />&nbsp;
             <input type="submit" name="submit" value="Поиск" style="width: 11ex;" class="button_submit" />
             <input type="hidden" name="advanced" value="0" />
@@ -49,27 +49,27 @@ class Main
 <div class="main_menu">
     <ul class="reset clearfix">
         <li id="button_home" class="active">
-            <a title="Начало" href="http://www.club2u.ru/index.php">
+            <a title="Начало" href="/index.php">
                 <span><em>Начало</em></span>
             </a>
         </li>
         <li id="button_help">
-            <a title="Помощь" href="http://www.club2u.ru/index.php?action=help">
+            <a title="Помощь" href="/index.php?action=help">
                 <span>Помощь</span>
             </a>
         </li>
         <li id="button_search">
-            <a title="Поиск" href="http://www.club2u.ru/index.php?action=search">
+            <a title="Поиск" href="/index.php?action=search">
                 <span>Поиск</span>
             </a>
         </li>
         <li id="button_login">
-            <a title="Вход" href="http://www.club2u.ru/index.php?action=login">
+            <a title="Вход" href="/index.php?action=login">
                 <span>Вход</span>
             </a>
         </li>
         <li id="button_register" class="last">
-            <a title="Регистрация" href="http://www.club2u.ru/index.php?action=register">
+            <a title="Регистрация" href="/index.php?action=register">
                 <span>Регистрация</span>
             </a>
         </li>
@@ -78,19 +78,19 @@ class Main
 <?php
     }
 
-    public function showNavigator(array $link_tree)
+    public function showNavigator(array $link_tree = [])
     {
         $tree = ["<a href=\"index.php\"><span>{$this->context['title']}</span></a>"];
         foreach ($link_tree as $link) {
             if (isset($link->topic_id)) {
-                $tree[] = "Тема: <a href=\"index.php?topic={$link->topic_id}.0.html\"><span>{$link->name}</span></a>";
+                $tree[] = "Тема: <a href=\"index.php?topic={$link->topic_id}.0\"><span>{$link->name}</span></a>";
             } else {
                 $url = 'index.php';
                 if (isset($link->category_id)) {
                     $url = "index.php#c{$link->category_id}";
                 }
                 if (isset($link->board_id)) {
-                    $url = "index.php?board={$link->board_id}.0.html";
+                    $url = "index.php?board={$link->board_id}.0";
                 }
                 $tree[] = "<a href=\"{$url}\"><span>{$link->name}</span></a>";
             }
