@@ -78,23 +78,53 @@ class Main
 <?php
     }
 
-    public function showNavigator()
+    public function showNavigator(array $link_tree)
     {
+        $tree = [];
+        foreach ($link_tree as $link) {
+            if (isset($link->topic_id)) {
+                $tree[] = "Тема: <a href=\"index.php?topic={$link->topic_id}.0.html\"><span>{$link->name}</span></a>";
+            } else {
+                $url = 'index.php';
+                if (isset($link->category_id)) {
+                    $url = "index.php#c{$link->category_id}";
+                }
+                if (isset($link->board_id)) {
+                    $url = "index.php?board={$link->board_id}.0.html";
+                }
+                $tree[] = "<a href=\"{$url}\"><span>{$link->name}</span></a>";
+            }
+        }
+        $last = count($tree) - 1;
 ?>
 <ul class="linktree" id="linktree_upper">
-    <li>
-        <a href="http://www.club2u.ru/index.php"><span>Твой клуб</span></a> &gt;
-    </li>
-    <li>
-        <a href="http://www.club2u.ru/index.php#c3"><span>Неофициальная техническая поддержка пользователей</span></a> &gt;
-    </li>
-    <li>
-        <a href="http://www.club2u.ru/index.php?board=12.0"><span>Техническая поддержка: проблемы и решения</span></a> &gt;
-    </li>
-    <li class="last">Тема:
-        <a href="http://www.club2u.ru/index.php?topic=31.0"><span>Проблема с ip адресом</span></a>
-    </li>
+<?php
+        for ($i = 0; $i < count($tree); $i++) {
+            if ($i!=$last) {
+?>
+    <li><?=$tree[$i]?> &gt;</li>
+<?php
+            } else {
+?>
+    <li class="last"><?=$tree[$i]?></li>
+<?php
+            }
+        }
+?>
 </ul>
+<?php
+    }
+
+    public static function showPopup($message, $title, $style = null)
+    {
+?>
+<div id="modalDialog" class="modalDialog modalDialog-target">
+    <div>
+        <h1><?= $title ?></h1>
+        <?= $message ?>
+        <a href="#close" title="Закрыть" class="close" onclick="document.getElementById('modalDialog').classList.remove('modalDialog-target'); return false;">X</a>
+    </div>
+</div>
 <?php
     }
 
