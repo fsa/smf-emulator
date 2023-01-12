@@ -8,7 +8,6 @@ class Controller
 {
     public static function route()
     {
-        $response = App::initHtml();
         if(count($_GET)==0) {
             self::index();
             exit;
@@ -28,11 +27,12 @@ class Controller
             self::topic($topic);
             exit;            
         }
-        $response->returnError(404);
+        App::initHtml()->returnError(404);
     }
 
     public static function index()
     {
+        $response = App::initHtml();
         $response = App::response();
         $response->showHeader();
         $response->showNavigator([]);
@@ -43,7 +43,7 @@ class Controller
 
     public static function action($action)
     {
-        App::response()->returnError(500);
+        App::initHtml()->returnError(500);
     }
     public static function board($board)
     {
