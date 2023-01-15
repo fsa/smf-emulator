@@ -24,10 +24,10 @@ class Category
         <h4><a href="/index.php?board=<?=$board->id?>.0" name="b<?=$board->id?>"><?=$board->name?></a></h4>
         <p><?=$board->description?></p>
     </td>
-    <td class="windowbg stats smalltext">
+    <!--td class="windowbg stats smalltext">
         30 Сообщений <br />
         16 Тем
-    </td>
+    </td-->
 </tr>
 <?php
             }

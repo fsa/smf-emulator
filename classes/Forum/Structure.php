@@ -64,4 +64,12 @@ class Structure
         $stmt = $this->pdo->query("SELECT json_agg(a.cat) FROM (SELECT json_build_object('id', c.id, 'name', name, 'boards', b.boards) cat FROM (SELECT category_id, json_agg(json_build_object('id', id, 'name', name, 'description', description)) AS boards FROM boards WHERE parent_id IS NULL GROUP BY category_id) b LEFT JOIN categories c ON b.category_id=c.id ORDER BY c.category_order) a");
         return json_decode($stmt->fetchColumn());
     }
+
+    public function getBoard($id, $start, $limit)
+    {
+        $stmt = $this->pdo->prepare("SELECT json_agg(b.board) FROM (SELECT json_build_object('id', id, 'title', title, 'last_modified', last_modified) AS board FROM topics WHERE board_id=? ORDER BY last_modified LIMIT ? OFFSET ?) b");
+        $stmt->execute([$id, $limit, $start]);
+        return json_decode($stmt->fetchColumn());
+
+    }
 }
