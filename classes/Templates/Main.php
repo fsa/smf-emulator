@@ -10,21 +10,15 @@ class Main
     public $header;
     public $notify;
 
-    public function showHeader(string $title = null, string $description = null)
+    public function showHeader()
     {
-        if (is_null($title)) {
-            $title = $this->context['title'] . ' - Главная страница';
-        }
-        if (is_null($description)) {
-            $description = $title;
-        }
 ?>
 <!DOCTYPE html>
 <html">
 <head>
-    <title><?=$title?></title>
-    <link rel="stylesheet" href="/styles.css">
-    <meta name="description" content="<?=$description?>"/>
+<title><?= $this->title ?: $this->context['title'] . ' - Главная страница'?></title>
+<link rel="stylesheet" href="/styles.css">
+<?=$this->header?>
 </head>
 
 <body>

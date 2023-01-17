@@ -8,7 +8,6 @@ use Forum\View\Category;
 
 class Controller
 {
-    const BOARD_SIZE=20;
     const TOPIC_SIZE=15;
 
     public static function route()
@@ -62,19 +61,32 @@ class Controller
         list($board_id, $board_start) = $board;
         $forum = new Structure(App::sql());
         $tree = $forum->getBoardLinksTree($board_id);
-        $board = $forum->getBoard($board_id, $board_start, self::BOARD_SIZE);
-        $response->showHeader();
+        $board_info = $forum->getBoardInfo($board_id);
+        if ($board_info->description) {
+            $response->addDescription($board_info->description);
+        }
+        $board = $forum->getBoard($board_id, $board_start, Board::SIZE);
+        $response->showHeader($board_info->name);
         $response->showNavigator($tree);
-        Board::show($board);
+        Board::show($board_info, $board);
         $response->showNavigator($tree);
         $response->showFooter();
     }
 
     public static function topic($topic)
     {
-        //$forum = new Structure(App::sql());
-        //$tree = $forum->getTopicLinksTree(7);
-        //$response->showNavigator($tree);
-        die("Topic: $topic");
+        $response = App::initHtml();
+        $topic = explode('.', $topic);
+        if (count($topic) != 2) {
+            $response->returnError(400);
+        }
+        list($topic_id, $topic_start) = $topic;
+        $forum = new Structure(App::sql());
+        $tree = $forum->getTopicLinksTree($topic_id);
+        $response->showHeader();
+        $response->showNavigator($tree);
+        echo($topic_id. ' '. $topic_start);
+        $response->showNavigator($tree);
+        $response->showFooter();
     }
 }

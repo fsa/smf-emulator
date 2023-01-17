@@ -4,11 +4,13 @@ namespace Forum\View;
 
 class Board
 {
+	const SIZE = 20;
+
     public static function showDescription($description)
     {
 ?>
 <div id="description" class="tborder">
-	<div class="titlebg2 largepadding smalltext"><?="Description"?></div>
+	<div class="titlebg2 largepadding smalltext"><?=$description?></div>
 </div>
 <?php
     }
@@ -22,11 +24,10 @@ class Board
 <?php
     }
 
-    public static function show($board)
+    public static function show($board_info, $board)
     {
-        var_dump($board);
-        self::showDescription('Description');
-        self::showNavigator(24);
+        self::showDescription($board_info->description);
+        self::showNavigator($board_info->id);
 ?>
 <div class="tborder" id="messageindex">
 	<table cellspacing="1" class="bordercolor boardsframe">
@@ -54,24 +55,36 @@ class Board
 			<td class="windowbg2 icon2">
 				<img src="/img/post/xx.gif" alt=""/>
 			</td>
+<?php
+            if ($topic->is_sticky) {
+?>
 			<td class="subject windowbg3">
 				<img src="/img/icons/show_sticky.gif" class="floatright" alt="" id="stickyicon17" style="margin: 0;"/>
 				<strong><span id="msg_<?=$topic->id?>"><a href="/index.php?topic=<?=$topic->id?>.0"><?=$topic->title?></a></span></strong>
 			</td>
+<?php
+            } else {
+?>
+			<td class="subject windowbg">
+				<span id="msg_<?=$topic->id?>"><a href="/index.php?topic=<?=$topic->id?>.0"><?=$topic->title?></a></span>
+			</td>
+<?php
+            }
+?>
 			<td class="windowbg2 starter">
-				<a href="/index.php?action=profile;u=5" title="Просмотр профиля remalloc">remalloc</a>
+				<a href="/index.php?action=profile;u=<?=$topic->started_member_id?>" title="Просмотр профиля <?=$topic->started_member_name?>"><?=$topic->started_member_name?></a>
 			</td>
 			<td class="windowbg3 replies">
-				720
+				<?=$topic->num_replies?>
 			</td>
 			<td class="windowbg3 views">
-				33371
+				<?=$topic->num_views?>
 			</td>
 			<td class="windowbg2 lastpost">
 				<a href="/index.php?topic=17.720#msg23442"><img src="/img/icons/last_post.gif" alt="Последний ответ" title="Последний ответ"/></a>
 				<span class="smalltext">
 					<?= $topic->last_modified?date('d.m.Y H:i:s', strtotime($topic->last_modified)):''?><br/>
-					от <a href="/index.php?action=profile;u=104">FSA</a>
+					от <a href="/index.php?action=profile;u=<?=$topic->updated_member_id?>"><?=$topic->updated_member_name?></a>
 				</span>
 			</td>
 		</tr>
