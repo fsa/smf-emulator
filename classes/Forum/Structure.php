@@ -2,6 +2,9 @@
 
 namespace Forum;
 
+use Forum\View\Board;
+use Forum\View\Topic;
+
 class Structure
 {
 
@@ -16,8 +19,9 @@ class Structure
         return $stmt->fetchObject();
     }
 
-    public function getBoardsTree(int $id): array
+    public function getBoardsTree(int $id): ?array
     {
+        var_dump($id);
         $stmt = $this->pdo->prepare("SELECT json_agg(q.*) FROM (WITH RECURSIVE r(id, name, parent_id) AS ( SELECT id, name, parent_id FROM boards b WHERE id = ? UNION ALL SELECT bp.id, bp.name, bp.parent_id FROM r, boards bp WHERE r.parent_id = bp.id ) SELECT id AS board_id, name FROM r) q");
         $stmt->execute([$id]);
         $json = $stmt->fetchColumn();
@@ -65,7 +69,7 @@ class Structure
         return json_decode($stmt->fetchColumn());
     }
 
-    public function getBoard($id, $start, $limit)
+    public function getBoard($id, $start, $limit = Board::SIZE)
     {
         $stmt = $this->pdo->prepare("SELECT json_agg(b.topics) FROM (SELECT row_to_json(topics) AS topics FROM topics WHERE board_id=? ORDER BY NOT is_sticky, last_modified DESC LIMIT ? OFFSET ?) b");
         $stmt->execute([$id, $limit, $start]);
@@ -76,6 +80,13 @@ class Structure
     {
         $stmt = $this->pdo->prepare("SELECT row_to_json(boards) FROM boards WHERE id=?");
         $stmt->execute([$id]);
+        return json_decode($stmt->fetchColumn());
+    }
+
+    public function getMessages($id, $start, $limit = Topic::SIZE)
+    {
+        $stmt = $this->pdo->prepare("SELECT json_agg(b.messages) FROM (SELECT row_to_json(messages) AS messages FROM messages WHERE topic_id=? ORDER BY posted LIMIT ? OFFSET ?) b");
+        $stmt->execute([$id, $limit, $start]);
         return json_decode($stmt->fetchColumn());
     }
 }

@@ -5,6 +5,7 @@ namespace Forum;
 use App;
 use Forum\View\Board;
 use Forum\View\Category;
+use Forum\View\Topic;
 
 class Controller
 {
@@ -65,7 +66,7 @@ class Controller
         if ($board_info->description) {
             $response->addDescription($board_info->description);
         }
-        $board = $forum->getBoard($board_id, $board_start, Board::SIZE);
+        $board = $forum->getBoard($board_id, $board_start);
         $response->showHeader($board_info->name);
         $response->showNavigator($tree);
         Board::show($board_info, $board);
@@ -82,10 +83,11 @@ class Controller
         }
         list($topic_id, $topic_start) = $topic;
         $forum = new Structure(App::sql());
+        $topic = $forum->getMessages($topic_id, $topic_start);
         $tree = $forum->getTopicLinksTree($topic_id);
         $response->showHeader();
         $response->showNavigator($tree);
-        echo($topic_id. ' '. $topic_start);
+        Topic::show((object)['id'=>0], $topic);
         $response->showNavigator($tree);
         $response->showFooter();
     }
