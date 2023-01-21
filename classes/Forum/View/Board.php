@@ -59,13 +59,20 @@ class Board
             if ($topic->is_sticky) {
 ?>
 			<td class="subject windowbg3">
-				<img src="/img/icons/show_sticky.gif" class="floatright" alt="" id="stickyicon17" style="margin: 0;"/>
+				<img src="/img/icons/show_sticky.gif" class="floatright" alt="" id="stickyicon<?=$topic->id?>" style="margin: 0;"/>
 				<strong><span id="msg_<?=$topic->id?>"><a href="/index.php?topic=<?=$topic->id?>.0"><?=$topic->title?></a></span></strong>
 			</td>
 <?php
             } else {
 ?>
 			<td class="subject windowbg">
+<?php
+            if ($topic->locked) {
+?>
+				<img src="/img/icons/quick_lock.gif" class="floatright" alt="" id="lockicon<?=$topic->id?>" style="margin: 0;"/>
+<?php
+			}
+?>
 				<span id="msg_<?=$topic->id?>"><a href="/index.php?topic=<?=$topic->id?>.0"><?=$topic->title?></a></span>
 			</td>
 <?php
