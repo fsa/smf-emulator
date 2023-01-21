@@ -6,18 +6,31 @@ class Topic
 {
 	const SIZE = 15;
 
-    public static function showNavigator($board_id)
+    public static function showNavigator($topic, $current)
     {
+		$page = intval($current / self::SIZE);
+		$max = intval($topic->num_replies / self::SIZE);
+		if ($max == 0) {
+			return;
+		}
 ?>
 <div id="modbuttons_top" class="modbuttons clearfix margintop">
-	<div class="floatleft middletext">Страницы: [<strong>1</strong>] <a class="navPages" href="/index.php?board=<?=$board_id?>.20">2</a> <a class="navPages" href="/index.php?board=<?=$board_id?>.40">3</a></div>
+	<div class="floatleft middletext">Страницы: <?php
+	for ($i=0 ; $i<$max ; $i++) {
+		if ($i==$page) {
+			echo '[<strong>' . ($i + 1) . '</strong>] ';
+		} else {
+			echo '<a class="navPages" href="/index.php?topic='. $topic->id . '.' . ($i*self::SIZE). '">' . ($i + 1) . '</a> ';
+		}
+	}
+?></div>
 </div>
 <?php
     }
 
-    public static function show($topic_info, $topic)
+    public static function show($topic_info, $topic, $current)
     {
-        self::showNavigator($topic_info->id);
+        self::showNavigator($topic_info, $current);
 ?>
 <div id="forumposts" class="tborder">
 	<h3 class="catbg3">
@@ -70,6 +83,6 @@ class Topic
 ?>
 </div>
 <?php
-        self::showNavigator($topic_info->id);
+		self::showNavigator($topic_info, $current);
     }
 }

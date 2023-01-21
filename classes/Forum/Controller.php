@@ -89,7 +89,7 @@ class Controller
         $response->addDescription($topic_info->title);
         $response->showHeader($topic_info->title);
         $response->showNavigator($tree);
-        Topic::show($topic_info, $topic);
+        Topic::show($topic_info, $topic, $topic_start);
         $response->showNavigator($tree);
         $response->showFooter();
     }
