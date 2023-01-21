@@ -64,7 +64,7 @@ class Controller
         $tree = $forum->getBoardLinksTree($board_id);
         $board_info = $forum->getBoardInfo($board_id);
         if ($board_info->description) {
-            $response->addDescription($board_info->description);
+            $response->addDescription(strip_tags($board_info->description));
         }
         $board = $forum->getBoard($board_id, $board_start);
         $response->showHeader($board_info->name);
@@ -84,10 +84,12 @@ class Controller
         list($topic_id, $topic_start) = $topic;
         $forum = new Structure(App::sql());
         $topic = $forum->getMessages($topic_id, $topic_start);
+        $topic_info = $forum->getTopic($topic_id);
         $tree = $forum->getTopicLinksTree($topic_id);
-        $response->showHeader();
+        $response->addDescription($topic_info->title);
+        $response->showHeader($topic_info->title);
         $response->showNavigator($tree);
-        Topic::show((object)['id'=>0], $topic);
+        Topic::show($topic_info, $topic);
         $response->showNavigator($tree);
         $response->showFooter();
     }

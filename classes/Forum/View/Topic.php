@@ -23,7 +23,7 @@ class Topic
 	<h3 class="catbg3">
 		<img src="https://web.archive.org/web/20171014075953im_/http://www.club2u.ru/Themes/core/images/topic/normal_post.gif" align="bottom" alt=""/>
 		<span>Автор</span>
-		<span id="top_subject">Тема: Модем D-Link DSL-2500U. Помогите настроить &nbsp;(Прочитано 4154 раз)</span>
+		<span id="top_subject">Тема: <?=$topic_info->title?></span>
 	</h3>
 	<div id="whoisviewing" class="smalltext headerpadding windowbg2">0 Пользователей и 1 Гость просматривают эту тему.
 	</div>

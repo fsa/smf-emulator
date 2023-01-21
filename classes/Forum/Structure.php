@@ -21,7 +21,6 @@ class Structure
 
     public function getBoardsTree(int $id): ?array
     {
-        var_dump($id);
         $stmt = $this->pdo->prepare("SELECT json_agg(q.*) FROM (WITH RECURSIVE r(id, name, parent_id) AS ( SELECT id, name, parent_id FROM boards b WHERE id = ? UNION ALL SELECT bp.id, bp.name, bp.parent_id FROM r, boards bp WHERE r.parent_id = bp.id ) SELECT id AS board_id, name FROM r) q");
         $stmt->execute([$id]);
         $json = $stmt->fetchColumn();
