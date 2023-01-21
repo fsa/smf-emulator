@@ -69,7 +69,7 @@ class Controller
         $board = $forum->getBoard($board_id, $board_start);
         $response->showHeader($board_info->name);
         $response->showNavigator($tree);
-        Board::show($board_info, $board);
+        Board::show($board_info, $board, $board_start);
         $response->showNavigator($tree);
         $response->showFooter();
     }

@@ -15,19 +15,33 @@ class Board
 <?php
     }
 
-    public static function showNavigator($board_id)
+    public static function showNavigator($board_id, $current, $total)
     {
+		$page = intval($current / self::SIZE);
+		$max = intval($total / self::SIZE);
+		if ($max == 0) {
+			return;
+		}
 ?>
 <div id="modbuttons_top" class="modbuttons clearfix margintop">
-	<div class="floatleft middletext">Страницы: [<strong>1</strong>] <a class="navPages" href="/index.php?board=<?=$board_id?>.20">2</a> <a class="navPages" href="/index.php?board=<?=$board_id?>.40">3</a></div>
+	<div class="floatleft middletext">Страницы:
+<?php
+	for ($i=0 ; $i<$max ; $i++) {
+		if ($i==$page) {
+			echo '[<strong>' . ($i + 1) . '</strong>] ';
+		} else {
+			echo '<a class="navPages" href="/index.php?board='. $board_id . '.' . ($i*self::SIZE). '">' . ($i + 1) . '</a> ';
+		}
+	}
+?></div>
 </div>
 <?php
     }
 
-    public static function show($board_info, $board)
+    public static function show($board_info, $board, $current)
     {
         self::showDescription($board_info->description);
-        self::showNavigator($board_info->id);
+        self::showNavigator($board_info->id, $current, $board_info->num_topics);
 ?>
 <div class="tborder" id="messageindex">
 	<table cellspacing="1" class="bordercolor boardsframe">
@@ -46,7 +60,7 @@ class Board
 			<td colspan="7" class="headerpadding smalltext">0 Пользователей и 1 Гость просматривают этот раздел.</td>
 		</tr>
 <?php
-        foreach($board as $topic) {
+        foreach($board??[] as $topic) {
 ?>
         <tr>
 			<td class="windowbg2 icon1">
@@ -102,6 +116,6 @@ class Board
 	</table>
 </div>
 <?php
-        self::showNavigator(24);
+        self::showNavigator($board_info->id, $current, $board_info->num_topics);
     }
 }
