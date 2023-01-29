@@ -19,6 +19,7 @@ class Main
 <title><?= $this->title ?: $this->context['title'] . ' - Главная страница'?></title>
 <link rel="stylesheet" href="/styles.css">
 <?=$this->header?>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2522071277043261" crossorigin="anonymous"></script>
 </head>
 
 <body>
