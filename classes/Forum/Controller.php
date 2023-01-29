@@ -84,10 +84,13 @@ class Controller
         list($topic_id, $topic_start) = $topic;
         $forum = new Structure(App::sql());
         $topic = $forum->getMessages($topic_id, $topic_start);
+        if (is_null($topic)) {
+            $response->returnError(404);
+        }
         $topic_info = $forum->getTopic($topic_id);
         $tree = $forum->getTopicLinksTree($topic_id);
         $response->addDescription($topic_info->title);
-        $response->showHeader($topic_info->title);
+        $response->showHeader($topic_info->title . ($topic_start>0?' - Страница ' . (int)($topic_start/self::TOPIC_SIZE+1):''));
         $response->showNavigator($tree);
         Topic::show($topic_info, $topic, $topic_start);
         $response->showNavigator($tree);
